@@ -1,6 +1,7 @@
 package pl.mareksliwinski;
 import java.util.Scanner;
 
+
 public class caseDivider{
 
     private double [] percentList = new double[outFirm.OUTNUMBER];

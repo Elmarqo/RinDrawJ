@@ -1,12 +1,17 @@
 package pl.mareksliwinski;
 
+
+import java.io.IOException;
+
 public class Main {
 
-    public static void main(String[] args) {
-        caseDivider casedivider = new caseDivider();
-        casedivider.divider();
+    public static void main(String[] args) throws IOException{
+        /*caseDivider casedivider = new caseDivider();
+        casedivider.divider();*/
+        //ArrayList<structureData> listcases = new ArrayList<>();
 
-        for(double elem : casedivider.getPercentList())
-            System.out.println(elem);
+        structureData newdata = new structureData();
+        newdata.loader("new.txt");
+        //System.out.println(newdata.getList().get(0).getDebt());
     }
 }
