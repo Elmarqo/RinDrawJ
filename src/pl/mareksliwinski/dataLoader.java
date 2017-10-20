@@ -2,35 +2,32 @@ package pl.mareksliwinski;
 
 import java.io.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 public class dataLoader {
 
     private String firmName;
     private String caseNumber;
     private double amountDue;
-    private Long idCustomer;
+    private long idCustomer;
     private ArrayList<dataLoader> list = new ArrayList<>();
 
-    public String getFirmName() {
+    private String getFirmName() {
         return firmName;
     }
-
     private void setFirmName(String firmName) {
         this.firmName = firmName;
     }
 
-    public String getCaseNumber() {
+    private String getCaseNumber() {
         return caseNumber;
     }
 
-    public void setCaseNumber(String caseNumber) {
+    private void setCaseNumber(String caseNumber) {
         this.caseNumber = caseNumber;
     }
 
-    public double getAmount() {
+    private double getAmountDue() {
         return amountDue;
     }
 
@@ -38,7 +35,7 @@ public class dataLoader {
         this.amountDue = amountDue;
     }
 
-    public long getIdCustomer() {
+    private Long getIdCustomer() {
         return idCustomer;
     }
 
@@ -46,49 +43,43 @@ public class dataLoader {
         this.idCustomer = idCustomer;
     }
 
-    ArrayList<dataLoader> getList() {
+    private ArrayList<dataLoader> getList() {
         return list;
     }
 
-    public void setList(ArrayList<dataLoader> list) {
-        this.list = list;
+    private void setList(dataLoader dataloader) {
+        list.add(dataloader);
     }
 
     public void loader(String fileName) {
         String pattern = "###,###.###";
-        DecimalFormat df = new DecimalFormat(pattern);
-        ArrayList<dataLoader> caseList = new ArrayList<>();
+        DecimalFormat decimalFormat = new DecimalFormat(pattern);
         String line;
-        System.out.println("");
+        //System.out.println("");
 
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             while ((line = br.readLine()) != null) {
                 dataLoader set = new dataLoader();
                 String[] split = line.split(";");
-                set.firmName = split[0];
-                set.caseNumber = split[1];
+                set.setFirmName(split[0]);
+                set.setCaseNumber(split[1]);
                 set.setAmountDue(Double.parseDouble(split[2]));
                 set.setIdCustomer(Long.parseLong(split[3]));
-                caseList.add(set);
-                //Collections.sort(caseList, (dataLoader elem, dataLoader elem2) -> elem.idCustomer.compareTo(elem2.idCustomer));
-                //Collections.sort(personList, (dataLoader p1, Person p2) -> p1.firstName.compareTo(p2.firstName));
+                setList(set);
             }
         } catch (IOException e) {
-            System.out.println("Wczytano " + caseList.size() + " spraw");
             e.printStackTrace();
         }
-        caseList.sort((elem, elem2) -> {
-            return elem.idCustomer.compareTo(elem2.idCustomer);
-        });
-        //Comparator.comparing()
+        getList().sort((elem, elem2) ->
+            elem.getIdCustomer().compareTo(elem2.getIdCustomer()));
 
-        for (dataLoader elem : caseList) {
-            System.out.print(elem.firmName + "\t");
-            System.out.print(elem.caseNumber + "\t");
-            System.out.print(elem.amountDue + "\t");
-            System.out.println(elem.idCustomer);
-        }
-        System.out.println("Wczytano " + df.format(caseList.size()) + " spraw");
+        /*for (dataLoader elem : getList()) {
+            System.out.print(elem.getFirmName() + "\t");
+            System.out.print(elem.getCaseNumber() + "\t");
+            System.out.print(elem.getAmountDue() + "\t");
+            System.out.println(elem.getIdCustomer());
+        }*/
+        System.out.println("Wczytano " + decimalFormat.format(getList().size()) + " spraw");
     }
 }

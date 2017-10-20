@@ -9,6 +9,5 @@ public class Main {
 
         dataLoader newdata = new dataLoader();
         newdata.loader("new.csv");
-        System.out.println(newdata.getList().size());
     }
 }
