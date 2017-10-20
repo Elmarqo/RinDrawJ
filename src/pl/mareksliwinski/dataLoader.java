@@ -1,73 +1,94 @@
 package pl.mareksliwinski;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.Scanner;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class dataLoader {
-    public String getString() {
-        return string;
+
+    private String firmName;
+    private String caseNumber;
+    private double amountDue;
+    private Long idCustomer;
+    private ArrayList<dataLoader> list = new ArrayList<>();
+
+    public String getFirmName() {
+        return firmName;
     }
 
-    public void setString(String string) {
-        this.string = string;
+    private void setFirmName(String firmName) {
+        this.firmName = firmName;
     }
 
-    public int getLiczba() {
-        return liczba;
+    public String getCaseNumber() {
+        return caseNumber;
     }
 
-    public void setLiczba(int liczba) {
-        this.liczba = liczba;
+    public void setCaseNumber(String caseNumber) {
+        this.caseNumber = caseNumber;
     }
 
-    String string;
-    int liczba;
-
-    public void setArry(ArrayList<dataLoader> arry) {
-        this.arry = arry;
+    public double getAmount() {
+        return amountDue;
     }
-    ArrayList<dataLoader> arry = new ArrayList<>();
 
-    public void loader(String csvFile) {
+    private void setAmountDue(double amountDue) {
+        this.amountDue = amountDue;
+    }
 
+    public long getIdCustomer() {
+        return idCustomer;
+    }
 
+    private void setIdCustomer(long idCustomer) {
+        this.idCustomer = idCustomer;
+    }
 
-        File file = new File(csvFile);
-        /*if(file.isFile())
-            System.out.println("Plik znajduje się w podanej lokalizacji.");
-        else
-            System.out.println("Brak pliku w podanej lokalizacji!!!");*/
+    ArrayList<dataLoader> getList() {
+        return list;
+    }
 
+    public void setList(ArrayList<dataLoader> list) {
+        this.list = list;
+    }
+
+    public void loader(String fileName) {
+        String pattern = "###,###.###";
+        DecimalFormat df = new DecimalFormat(pattern);
+        ArrayList<dataLoader> caseList = new ArrayList<>();
         String line;
-        int index = 0;
+        System.out.println("");
 
-        try (BufferedReader br = new BufferedReader(new FileReader(csvFile))) {
-
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileName));
             while ((line = br.readLine()) != null) {
-
                 dataLoader set = new dataLoader();
-                String[] country = line.split(";");
-                set.string = country[0];
-                //set.liczba = Integer.parseInt(country[0]);
-                //set.setString(country[0]);
-                set.setLiczba(Integer.parseInt(country[1]));
-                //set.setLiczba(index);
-                //System.out.println("Country [code= " + country[0] + " , name=" + country[1] + "]");
-                arry.add(set);
-                //System.out.println(arry.get());
-                //System.out.println("Index " + index);
-                index++;
+                String[] split = line.split(";");
+                set.firmName = split[0];
+                set.caseNumber = split[1];
+                set.setAmountDue(Double.parseDouble(split[2]));
+                set.setIdCustomer(Long.parseLong(split[3]));
+                caseList.add(set);
+                //Collections.sort(caseList, (dataLoader elem, dataLoader elem2) -> elem.idCustomer.compareTo(elem2.idCustomer));
+                //Collections.sort(personList, (dataLoader p1, Person p2) -> p1.firstName.compareTo(p2.firstName));
             }
         } catch (IOException e) {
+            System.out.println("Wczytano " + caseList.size() + " spraw");
             e.printStackTrace();
         }
-        for(int i = 0; i < arry.size(); i++){
-            System.out.println(arry.get(i).string);
-            System.out.println(arry.get(i).liczba);
+        caseList.sort((elem, elem2) -> {
+            return elem.idCustomer.compareTo(elem2.idCustomer);
+        });
+        //Comparator.comparing()
+
+        for (dataLoader elem : caseList) {
+            System.out.print(elem.firmName + "\t");
+            System.out.print(elem.caseNumber + "\t");
+            System.out.print(elem.amountDue + "\t");
+            System.out.println(elem.idCustomer);
         }
-
-        System.out.println(arry.size());
-
+        System.out.println("Wczytano " + df.format(caseList.size()) + " spraw");
     }
 }
