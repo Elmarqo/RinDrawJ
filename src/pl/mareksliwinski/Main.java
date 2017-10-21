@@ -11,9 +11,6 @@ public class Main {
         ArrayCreator olddata = new ArrayCreator();
         Opertations opertations = new Opertations();
 
-        opertations.theSameIdCudtomer();
-        //double[] test = casedivider.divider();
-        //newdata.loader("new.csv");
-        //newdata.loader("old.csv");
+        opertations.newOldSameId();
     }
 }

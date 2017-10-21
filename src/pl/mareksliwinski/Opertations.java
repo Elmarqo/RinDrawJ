@@ -1,37 +1,32 @@
 package pl.mareksliwinski;
 
-
 import java.util.ArrayList;
 
 public class Opertations {
 
-    public void theSameIdCudtomer() {
+    public void newOldSameId() {
 
         ArrayCreator newdata = new ArrayCreator();
         ArrayCreator olddata = new ArrayCreator();
-        ArrayList<ArrayCreator> newList = new ArrayList<>();
-        ArrayList<ArrayCreator> oldList = new ArrayList<>();
+        ArrayList<ArrayCreator> newList;
+        ArrayList<ArrayCreator> oldList;
 
         newdata.loader("new.csv");
         olddata.loader("old.csv");
-
+        ArrayList<ArrayCreator> temp = new ArrayList<>();
         newList = newdata.getList();
         oldList = olddata.getList();
-        int index = 0;
-        for (int i = 0; i < 300; i++) {
-            Long a = newList.get(i).getIdCustomer();
-            System.out.print(a + "\t");
-            System.out.print(oldList.get(i).getIdCustomer() + "\t");
-            System.out.println(oldList.get(i).getIdCustomer() - a);
-            if ((oldList.get(i).getIdCustomer().equals(a))) {
-                index++;
-            }
 
+        for (ArrayCreator elem : newList) {
+            for (ArrayCreator elem2 : oldList)
+                if ((elem.getIdCustomer().equals(elem2.getIdCustomer())))
+                    temp.add(elem);
         }
+        newDuplicateId(newList);
+    }
 
-        System.out.println("999AAAAAAA: " + index);
-        //System.out.println(oldList.get(0).getIdCustomer());
-
+    public void newDuplicateId(ArrayList<ArrayCreator> newList) {
 
     }
 }
+
