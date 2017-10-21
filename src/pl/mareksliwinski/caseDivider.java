@@ -7,12 +7,12 @@ public class caseDivider{
     private double [] percentList = new double[outFirm.OUTNUMBER];
     private Scanner scanner = new Scanner(System.in);
 
-    /*Getter
-    double[] getPercentList() {
+    public double[] getPercentList(){
         return percentList;
-    }*/
+    }
 
-    void divider(){
+
+    public double[] divider(){
         outFirm outfirm = new outFirm();
         double percentageSum;
         do {
@@ -25,5 +25,6 @@ public class caseDivider{
             if(percentageSum != 100)
                 System.out.println("\nSuma udzialow musi sie rownac 100%. Wprowadz dane ponownie:");
         }while (percentageSum != 100);
+        return percentList;
     }
 }
