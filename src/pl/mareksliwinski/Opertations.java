@@ -1,7 +1,6 @@
 package pl.mareksliwinski;
 
 
-
 import java.util.ArrayList;
 
 public class Opertations {
@@ -18,9 +17,20 @@ public class Opertations {
 
         newList = newdata.getList();
         oldList = olddata.getList();
+        int index = 0;
+        for (int i = 0; i < 300; i++) {
+            Long a = newList.get(i).getIdCustomer();
+            System.out.print(a + "\t");
+            System.out.print(oldList.get(i).getIdCustomer() + "\t");
+            System.out.println(oldList.get(i).getIdCustomer() - a);
+            if ((oldList.get(i).getIdCustomer().equals(a))) {
+                index++;
+            }
 
+        }
 
-        System.out.println("nowy rozmiar newdata: " + newList.size());
+        System.out.println("999AAAAAAA: " + index);
+        //System.out.println(oldList.get(0).getIdCustomer());
 
 
     }

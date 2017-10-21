@@ -10,7 +10,7 @@ public class ArrayCreator {
     private String firmName;
     private String caseNumber;
     private double amountDue;
-    private long idCustomer;
+    private Long idCustomer;
     private ArrayList<ArrayCreator> list = new ArrayList<>();
 
     private String getFirmName() {
@@ -41,7 +41,7 @@ public class ArrayCreator {
         return idCustomer;
     }
 
-    private void setIdCustomer(long idCustomer) {
+    private void setIdCustomer(Long idCustomer) {
         this.idCustomer = idCustomer;
     }
 
