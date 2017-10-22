@@ -40,7 +40,12 @@ public class ArrayCreator {
     }
 
     private void setAmountDue(double amountDue) {
-        this.amountDue = amountDue;
+        if (amountDue < 0) {
+            System.out.println("Kwota nie moze byc mniejsza od 0.");
+        } else {
+            this.amountDue = amountDue;
+        }
+
     }
 
     public Long getIdCustomer() {

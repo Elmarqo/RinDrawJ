@@ -20,13 +20,13 @@ public class Opertations {
         Comparator<ArrayCreator> comp = new Comparator<ArrayCreator>() {
             @Override
             public int compare(ArrayCreator elem, ArrayCreator elem2) {
-                return elem.getIdCustomer().compareTo(elem2.getIdCustomer());
+                return elem.getFirmName().compareTo(elem2.getFirmName());
             }
         };
 
-        /*int index = Collections.binarySearch(newList, new ArrayCreator(null, null, null, 72), comp);
+        int index = Collections.binarySearch(newList, new ArrayCreator("FDF", 1, 0, 5, comp));
         if (index >= 0)
-            System.out.println(index);*/
+            System.out.println(index);
     }
 
 
