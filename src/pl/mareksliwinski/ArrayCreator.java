@@ -1,6 +1,5 @@
 package pl.mareksliwinski;
 
-
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -13,7 +12,14 @@ public class ArrayCreator {
     private Long idCustomer;
     private ArrayList<ArrayCreator> list = new ArrayList<>();
 
-    private String getFirmName() {
+    public ArrayCreator(String firmName, String caseNumber, double amountDue, Long idCustomer) {
+        this.firmName = firmName;
+        this.caseNumber = caseNumber;
+        this.amountDue = amountDue;
+        this.idCustomer = idCustomer;
+    }
+
+    public String getFirmName() {
         return firmName;
     }
 
@@ -21,7 +27,7 @@ public class ArrayCreator {
         this.firmName = firmName;
     }
 
-    private String getCaseNumber() {
+    public String getCaseNumber() {
         return caseNumber;
     }
 
@@ -29,7 +35,7 @@ public class ArrayCreator {
         this.caseNumber = caseNumber;
     }
 
-    private double getAmountDue() {
+    public double getAmountDue() {
         return amountDue;
     }
 
@@ -61,8 +67,8 @@ public class ArrayCreator {
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             while ((line = br.readLine()) != null) {
-                ArrayCreator set = new ArrayCreator();
                 String[] split = line.split(";");
+                ArrayCreator set = new ArrayCreator(firmName, caseNumber, amountDue, idCustomer);
                 set.setFirmName(split[0]);
                 set.setCaseNumber(split[1]);
                 set.setAmountDue(Double.parseDouble(split[2]));
@@ -78,7 +84,7 @@ public class ArrayCreator {
                 elem.getIdCustomer().compareTo(elem2.getIdCustomer()));
         System.out.println("OK.");
 
-        /*for (dataLoader elem : getList()) {
+       /* for (ArrayCreator elem : getList()) {
             System.out.print(elem.getFirmName() + "\t");
             System.out.print(elem.getCaseNumber() + "\t");
             System.out.print(elem.getAmountDue() + "\t");

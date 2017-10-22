@@ -1,32 +1,36 @@
 package pl.mareksliwinski;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class Opertations {
 
-    public void newOldSameId() {
+    public void newOldSameId(ArrayCreator newdata, ArrayCreator olddata) {
 
-        ArrayCreator newdata = new ArrayCreator();
-        ArrayCreator olddata = new ArrayCreator();
-        ArrayList<ArrayCreator> newList;
-        ArrayList<ArrayCreator> oldList;
+        ArrayList<ArrayCreator> newList = newdata.getList();
+        ArrayList<ArrayCreator> oldList = newdata.getList();
+        ArrayList<ArrayCreator> temp = new ArrayList<>();
 
         newdata.loader("new.csv");
         olddata.loader("old.csv");
-        ArrayList<ArrayCreator> temp = new ArrayList<>();
-        newList = newdata.getList();
-        oldList = olddata.getList();
 
-        for (ArrayCreator elem : newList) {
-            for (ArrayCreator elem2 : oldList)
-                if ((elem.getIdCustomer().equals(elem2.getIdCustomer())))
-                    temp.add(elem);
-        }
-        newDuplicateId(newList);
+        System.out.println(newList.get(451).getAmountDue());
+
+        Comparator<ArrayCreator> comp = new Comparator<ArrayCreator>() {
+            @Override
+            public int compare(ArrayCreator elem, ArrayCreator elem2) {
+                return elem.getIdCustomer().compareTo(elem2.getIdCustomer());
+            }
+        };
+
+        /*int index = Collections.binarySearch(newList, new ArrayCreator(null, null, null, 72), comp);
+        if (index >= 0)
+            System.out.println(index);*/
     }
 
-    public void newDuplicateId(ArrayList<ArrayCreator> newList) {
+
+    public void DupNewListId(ArrayList<ArrayCreator> newList) {
 
     }
 }
-
