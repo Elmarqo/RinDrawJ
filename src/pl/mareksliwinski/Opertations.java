@@ -29,7 +29,18 @@ public class Opertations {
     }
 
 
-    public void DupNewListId(ArrayList<ArrayCreator> theSame) {
+    public void DupNewListId(ArrayList<ArrayCreator> newList) {
 
+        ArrayList<ArrayCreator> newListDuplicate = new ArrayList<>();
+        for (ArrayCreator elem : newList)
+        {
+            int index = 0;
+            for (ArrayCreator elem2 : newList)
+                if (elem.getIdCustomer().equals(elem2.getIdCustomer()))		//dodać drugi warunek na nr sprawy
+                    index++;
+            if (index > 1)
+                newListDuplicate.add(elem);
+        }
+        System.out.println(newListDuplicate.size());
     }
 }

@@ -22,8 +22,8 @@ public class Main {
         Opertations opertations = new Opertations();
 
         temp = opertations.newOldTheSameId(newList, oldList);
-        oldList.clear();
+        //oldList.clear();
 
-        opertations.DupNewListId(temp);
+        opertations.DupNewListId(oldList);
     }
 }
