@@ -1,36 +1,35 @@
 package pl.mareksliwinski;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 public class Opertations {
 
-    public void newOldSameId(ArrayCreator newdata, ArrayCreator olddata) {
+    public ArrayList<ArrayCreator> newOldTheSameId(ArrayList<ArrayCreator> newList, ArrayList<ArrayCreator> oldList) {
 
-        ArrayList<ArrayCreator> newList = newdata.getList();
-        ArrayList<ArrayCreator> oldList = newdata.getList();
-        ArrayList<ArrayCreator> temp = new ArrayList<>();
+        Set<Long> set = new HashSet<>();
+        ArrayList<ArrayCreator> theSame = new ArrayList<>();
 
-        newdata.loader("new.csv");
-        olddata.loader("old.csv");
+        for (ArrayCreator elem : oldList)
+            set.add(elem.getIdCustomer());
 
-        System.out.println(newList.get(451).getAmountDue());
-
-        Comparator<ArrayCreator> comp = new Comparator<ArrayCreator>() {
-            @Override
-            public int compare(ArrayCreator elem, ArrayCreator elem2) {
-                return elem.getFirmName().compareTo(elem2.getFirmName());
+        int index = 0;
+        for (ArrayCreator elem : newList) {
+            for (Long elem2 : set) {
+                if (elem.getIdCustomer().equals(elem2)) {
+                    index++;
+                    theSame.add(elem);
+                }
             }
-        };
-
-        int index = Collections.binarySearch(newList, new ArrayCreator("FDF", 1, 0, 5, comp));
-        if (index >= 0)
-            System.out.println(index);
+        }
+       /* System.out.println(set.size());
+        System.out.println(index);
+        System.out.println(theSame.size());*/
+        //oldList.clear();
+        return theSame;
     }
 
 
-    public void DupNewListId(ArrayList<ArrayCreator> newList) {
+    public void DupNewListId(ArrayList<ArrayCreator> theSame) {
 
     }
 }

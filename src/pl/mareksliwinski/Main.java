@@ -8,18 +8,22 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        String firmName = null;
-        String caseNumber = null;
-        double amountDue = 0.0;
-        Long idCustomer = null;
+        /*caseDivider casedivider = new caseDivider();
+        casedivider.divider();*/
 
-        caseDivider casedivider = new caseDivider();
-        ArrayCreator newdata = new ArrayCreator(firmName, caseNumber, amountDue, idCustomer);
-        ArrayCreator olddata = new ArrayCreator(firmName, caseNumber, amountDue, idCustomer);
+        ArrayCreator newdata = new ArrayCreator();
+        ArrayCreator olddata = new ArrayCreator();
+        newdata.loader("new.csv");
+        olddata.loader("old.csv");
+        ArrayList<ArrayCreator> newList = newdata.getList();
+        ArrayList<ArrayCreator> oldList = olddata.getList();
+        ArrayList<ArrayCreator> temp;
+
         Opertations opertations = new Opertations();
 
-        opertations.newOldSameId(newdata, olddata);
+        temp = opertations.newOldTheSameId(newList, oldList);
+        oldList.clear();
 
-
+        opertations.DupNewListId(temp);
     }
 }

@@ -12,13 +12,6 @@ public class ArrayCreator {
     private Long idCustomer;
     private ArrayList<ArrayCreator> list = new ArrayList<>();
 
-    public ArrayCreator(String firmName, String caseNumber, double amountDue, Long idCustomer) {
-        this.firmName = firmName;
-        this.caseNumber = caseNumber;
-        this.amountDue = amountDue;
-        this.idCustomer = idCustomer;
-    }
-
     public String getFirmName() {
         return firmName;
     }
@@ -72,8 +65,8 @@ public class ArrayCreator {
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             while ((line = br.readLine()) != null) {
+                ArrayCreator set = new ArrayCreator();
                 String[] split = line.split(";");
-                ArrayCreator set = new ArrayCreator(firmName, caseNumber, amountDue, idCustomer);
                 set.setFirmName(split[0]);
                 set.setCaseNumber(split[1]);
                 set.setAmountDue(Double.parseDouble(split[2]));
