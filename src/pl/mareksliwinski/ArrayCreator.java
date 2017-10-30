@@ -1,10 +1,19 @@
 package pl.mareksliwinski;
 
+import jdk.internal.jline.internal.TestAccessible;
+
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.*;
 
+import static java.util.Comparator.comparing;
+
 public class ArrayCreator {
+
+    public static final Comparator<ArrayCreator> BY_ID_CUSTOMER
+            = comparing(ArrayCreator::getIdCustomer);
+    public static final Comparator<ArrayCreator> BY_AMOUNT_DUE
+            = comparing(ArrayCreator::getAmountDue);
 
     private String firmName;
     private String caseNumber;
@@ -16,7 +25,7 @@ public class ArrayCreator {
         return firmName;
     }
 
-    private void setFirmName(String firmName) {
+    public void setFirmName(String firmName) {
         this.firmName = firmName;
     }
 
@@ -24,7 +33,7 @@ public class ArrayCreator {
         return caseNumber;
     }
 
-    private void setCaseNumber(String caseNumber) {
+    public void setCaseNumber(String caseNumber) {
         this.caseNumber = caseNumber;
     }
 
@@ -32,20 +41,19 @@ public class ArrayCreator {
         return amountDue;
     }
 
-    private void setAmountDue(double amountDue) {
+    public void setAmountDue(double amountDue) {
         if (amountDue < 0) {
             System.out.println("Kwota nie moze byc mniejsza od 0.");
         } else {
             this.amountDue = amountDue;
         }
-
     }
 
     public Long getIdCustomer() {
         return idCustomer;
     }
 
-    private void setIdCustomer(Long idCustomer) {
+    public void setIdCustomer(Long idCustomer) {
         this.idCustomer = idCustomer;
     }
 
@@ -53,15 +61,15 @@ public class ArrayCreator {
         return list;
     }
 
-    private void setList(ArrayCreator ArrayCreator) {
-        list.add(ArrayCreator);
+    public void setList(ArrayCreator arrayCreator) {
+        list.add(arrayCreator);
     }
 
     public void loader(String fileName) {
         String pattern = "###,###.###";
         DecimalFormat decimalFormat = new DecimalFormat(pattern);
         String line;
-        System.out.print("\nTrwa wczytywanie pliku " + fileName + "...");
+        System.out.print("\nTrwa wczytywanie pliku " + fileName + "... ");
         try {
             BufferedReader br = new BufferedReader(new FileReader(fileName));
             while ((line = br.readLine()) != null) {
@@ -76,10 +84,11 @@ public class ArrayCreator {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("OK.");
+        System.out.println(decimalFormat.format(getList().size()) + " rekordow OK.");
         System.out.print("Sortowanie...");
-        getList().sort((elem, elem2) ->
-                elem.getIdCustomer().compareTo(elem2.getIdCustomer()));
+        /*getList().sort((elem, elem2) ->
+                elem.getIdCustomer().compareTo(elem2.getIdCustomer()));*/
+        getList().sort(ArrayCreator.BY_ID_CUSTOMER);
         System.out.println("OK.");
 
        /* for (ArrayCreator elem : getList()) {
@@ -88,6 +97,6 @@ public class ArrayCreator {
             System.out.print(elem.getAmountDue() + "\t");
             System.out.println(elem.getIdCustomer());
         }*/
-        System.out.println("Wczytano " + decimalFormat.format(getList().size()) + " spraw");
+        //System.out.println("Wczytano " + decimalFormat.format(getList().size()) + " spraw");
     }
 }
