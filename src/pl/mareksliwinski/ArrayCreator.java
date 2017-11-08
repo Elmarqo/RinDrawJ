@@ -1,6 +1,5 @@
 package pl.mareksliwinski;
 
-import jdk.internal.jline.internal.TestAccessible;
 
 import java.io.*;
 import java.text.DecimalFormat;
@@ -9,11 +8,6 @@ import java.util.*;
 import static java.util.Comparator.comparing;
 
 public class ArrayCreator {
-
-    public static final Comparator<ArrayCreator> BY_ID_CUSTOMER
-            = comparing(ArrayCreator::getIdCustomer);
-    public static final Comparator<ArrayCreator> BY_AMOUNT_DUE
-            = comparing(ArrayCreator::getAmountDue);
 
     private String firmName;
     private String caseNumber;
@@ -75,8 +69,8 @@ public class ArrayCreator {
             while ((line = br.readLine()) != null) {
                 ArrayCreator set = new ArrayCreator();
                 String[] split = line.split(";");
-                set.setFirmName(split[0]);
-                set.setCaseNumber(split[1]);
+                set.setFirmName(split[0].trim());
+                set.setCaseNumber(split[1].trim());
                 set.setAmountDue(Double.parseDouble(split[2]));
                 set.setIdCustomer(Long.parseLong(split[3]));
                 setList(set);
@@ -86,17 +80,33 @@ public class ArrayCreator {
         }
         System.out.println(decimalFormat.format(getList().size()) + " rekordow OK.");
         System.out.print("Sortowanie...");
-        /*getList().sort((elem, elem2) ->
-                elem.getIdCustomer().compareTo(elem2.getIdCustomer()));*/
-        getList().sort(ArrayCreator.BY_ID_CUSTOMER);
+        sortByIDCustomer(getList());
+        //sortByAmountDue(getList());
         System.out.println("OK.");
 
-       /* for (ArrayCreator elem : getList()) {
+        /*for (ArrayCreator elem : getList()) {
             System.out.print(elem.getFirmName() + "\t");
             System.out.print(elem.getCaseNumber() + "\t");
             System.out.print(elem.getAmountDue() + "\t");
             System.out.println(elem.getIdCustomer());
         }*/
         //System.out.println("Wczytano " + decimalFormat.format(getList().size()) + " spraw");
+    }
+
+    public static final Comparator<ArrayCreator> BY_AMOUNT_DUE
+            = comparing(ArrayCreator::getAmountDue);
+
+    public void sortByAmountDue(ArrayList<ArrayCreator> list) {
+        getList().sort(BY_AMOUNT_DUE);
+    }
+
+    public void sortByIDCustomer(ArrayList<ArrayCreator> list) {
+        list.sort((elem, elem2) ->
+                elem.getIdCustomer().compareTo(elem2.getIdCustomer()));
+    }
+
+    @Override
+    public String toString() {
+        return "[ FIRM: " + firmName + "Case no: " + caseNumber + "Amount Due: " + amountDue + "ID: " + idCustomer + " ]";
     }
 }

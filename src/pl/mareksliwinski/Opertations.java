@@ -1,36 +1,38 @@
 package pl.mareksliwinski;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
+
 
 public class Opertations {
 
     public ArrayList<ArrayCreator> newOldTheSameId(ArrayList<ArrayCreator> newList, ArrayList<ArrayCreator> oldList) {
 
-        Set<Long> set = new TreeSet<>();
         ArrayList<ArrayCreator> theSame = new ArrayList<>();
-        ArrayList temp = new ArrayList<>();
+        ArrayList<ArrayCreator> uniqueOldList = new ArrayList<>();
 
+        oldList.stream()
+                .filter(distinctByKey(ArrayCreator::getIdCustomer))
+                .forEach(uniqueOldList::add);
 
-        for (ArrayCreator elem : oldList)
-            set.add(elem.getIdCustomer());
+        System.out.println("uniqueOldList size: " + uniqueOldList.size());
 
-        for (ArrayCreator elem : newList) {
-            for (Long elem2 : set) {
-                if (elem.getIdCustomer().equals(elem2))
-                    theSame.add(elem);
-            }
+        for (ArrayCreator elem : uniqueOldList) {
+            Long dataFromUniqueOldList = elem.getIdCustomer();
+            newList.stream()
+                    .filter(arrayCreator -> arrayCreator.getIdCustomer().equals(dataFromUniqueOldList))
+                    .forEach(theSame::add);
         }
-        for (ArrayCreator elem : newList){
-            System.out.println(elem.getAmountDue());
-        }
 
-        System.out.println(set.size());
-        //System.out.println(temp.size());
-        System.out.println(theSame.size());
+
+        System.out.println("theSame size: " + theSame.size());
         return theSame;
     }
 
-    public void DupNewListId(ArrayList<ArrayCreator> newList) {
+    ArrayList<ArrayCreator> DupNewListId(ArrayList<ArrayCreator> newList) {
 
         ArrayList<ArrayCreator> newListDuplicate = new ArrayList<>();
         for (ArrayCreator elem : newList) {
@@ -42,5 +44,11 @@ public class Opertations {
                 newListDuplicate.add(elem);
         }
         System.out.println(newListDuplicate.size());
+        return newListDuplicate;
+    }
+
+    private static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
+        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
+        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
     }
 }
