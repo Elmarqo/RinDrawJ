@@ -1,5 +1,6 @@
 package pl.mareksliwinski;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
@@ -9,38 +10,39 @@ import java.util.stream.Collectors;
 
 public class Opertations {
 
-    public ArrayList<ArrayCreator> newOldTheSameId(ArrayList<ArrayCreator> newList, ArrayList<ArrayCreator> oldList) {
+    public static final int EXISTING_MORE_THEN_ONE_TIME = 1;
 
-        ArrayList<ArrayCreator> theSame = new ArrayList<>();
-        ArrayList<ArrayCreator> uniqueOldList = new ArrayList<>();
+    public List<ArrayCreator> newOldTheSameId(List<ArrayCreator> newList, List<ArrayCreator> oldList) {
 
-        oldList.stream()
-                .filter(distinctByKey(ArrayCreator::getIdCustomer))
-                .forEach(uniqueOldList::add);
+        String pattern = "###,###.###";
+        DecimalFormat decimalFormat = new DecimalFormat(pattern);
 
-        System.out.println("uniqueOldList size: " + uniqueOldList.size());
+        Set<String> tempIdCustomer = oldList.stream().parallel()
+                .map(ArrayCreator::getIdCustomer)
+                .sorted()
+                .collect(Collectors.toSet());
+        System.out.println("\nLiczba unikalnych dluznikow w starej transzy: " +
+                decimalFormat.format(tempIdCustomer.size()));
 
-        for (ArrayCreator elem : uniqueOldList) {
-            Long dataFromUniqueOldList = elem.getIdCustomer();
-            newList.stream()
-                    .filter(arrayCreator -> arrayCreator.getIdCustomer().equals(dataFromUniqueOldList))
-                    .forEach(theSame::add);
-        }
+        List<ArrayCreator> theSame =
+                newList.stream().parallel()
+                        .filter(ac -> tempIdCustomer.contains(ac.getIdCustomer()))
+                        .collect(Collectors.toList());
+        System.out.println("Liczba dluznikow przekazanych w poprzednich transzach : " +
+                decimalFormat.format(theSame.size()));
 
-
-        System.out.println("theSame size: " + theSame.size());
         return theSame;
     }
 
-    ArrayList<ArrayCreator> DupNewListId(ArrayList<ArrayCreator> newList) {
+    List<ArrayCreator> DupNewListId(List<ArrayCreator> newList) {
 
-        ArrayList<ArrayCreator> newListDuplicate = new ArrayList<>();
+        List<ArrayCreator> newListDuplicate = new ArrayList<>();
         for (ArrayCreator elem : newList) {
             int index = 0;
             for (ArrayCreator elem2 : newList)
                 if (elem.getIdCustomer().equals(elem2.getIdCustomer()))        //dodać drugi warunek na nr sprawy
                     index++;
-            if (index > 1)
+            if (index > EXISTING_MORE_THEN_ONE_TIME)
                 newListDuplicate.add(elem);
         }
         System.out.println(newListDuplicate.size());

@@ -12,8 +12,8 @@ public class ArrayCreator {
     private String firmName;
     private String caseNumber;
     private double amountDue;
-    private Long idCustomer;
-    private ArrayList<ArrayCreator> list = new ArrayList<>();
+    private String idCustomer;
+    private List<ArrayCreator> list = new ArrayList<>();
 
     public String getFirmName() {
         return firmName;
@@ -43,15 +43,15 @@ public class ArrayCreator {
         }
     }
 
-    public Long getIdCustomer() {
+    public String getIdCustomer() {
         return idCustomer;
     }
 
-    public void setIdCustomer(Long idCustomer) {
+    public void setIdCustomer(String idCustomer) {
         this.idCustomer = idCustomer;
     }
 
-    public ArrayList<ArrayCreator> getList() {
+    public List<ArrayCreator> getList() {
         return list;
     }
 
@@ -71,8 +71,8 @@ public class ArrayCreator {
                 String[] split = line.split(";");
                 set.setFirmName(split[0].trim());
                 set.setCaseNumber(split[1].trim());
-                set.setAmountDue(Double.parseDouble(split[2]));
-                set.setIdCustomer(Long.parseLong(split[3]));
+                set.setAmountDue(Double.parseDouble(split[2].trim()));
+                set.setIdCustomer (split[3].trim());
                 setList(set);
             }
         } catch (IOException e) {
@@ -100,13 +100,13 @@ public class ArrayCreator {
         getList().sort(BY_AMOUNT_DUE);
     }
 
-    public void sortByIDCustomer(ArrayList<ArrayCreator> list) {
+    public void sortByIDCustomer(List<ArrayCreator> list) {
         list.sort((elem, elem2) ->
                 elem.getIdCustomer().compareTo(elem2.getIdCustomer()));
     }
 
     @Override
     public String toString() {
-        return "[ FIRM: " + firmName + "Case no: " + caseNumber + "Amount Due: " + amountDue + "ID: " + idCustomer + " ]";
+        return "[FIRM: " + firmName + ", Case no: " + caseNumber + ", Amount Due: " + amountDue + ", ID: " + idCustomer + "]\n";
     }
 }
