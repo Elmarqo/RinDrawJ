@@ -10,18 +10,10 @@ import java.util.stream.Collectors;
 
 public class Opertations {
 
-    public static final int EXISTING_MORE_THEN_ONE_TIME = 1;
-
     public List<ArrayCreator> newOldTheSameId(List<ArrayCreator> newList, List<ArrayCreator> oldList) {
 
         String pattern = "###,###.##";
         DecimalFormat dF = new DecimalFormat(pattern);
-
-        /*double amountSum =
-                newList.stream()
-                        .mapToDouble(ArrayCreator::getAmountDue)
-                        .sum();
-        System.out.println("suma: " + dF.format(amountSum));*/
 
         Set<String> tempIdCustomer = oldList.stream().parallel()
                 .map(ArrayCreator::getIdCustomer)
@@ -34,34 +26,27 @@ public class Opertations {
                 newList.stream().parallel()
                         .filter(ac -> tempIdCustomer.contains(ac.getIdCustomer()))
                         .collect(Collectors.toList());
-        System.out.println("Liczba dluznikow przekazanych w poprzednich transzach : " +
+        System.out.println("Liczba dluznikow nowej transzy wystepujaca w poprzednich transzach: " +
                 dF.format(theSame.size()));
 
         return theSame;
     }
 
-    List<ArrayCreator> DupNewListId(List<ArrayCreator> newList) {
+    List<ArrayCreator> dupNewListId(List<ArrayCreator> newList) {
 
-        List<ArrayCreator> newListDuplicate = new ArrayList<>();
-        /*for (ArrayCreator elem : newList) {
-            int index = 0;
-            for (ArrayCreator elem2 : newList)
-                if (elem.getIdCustomer().equals(elem2.getIdCustomer()))        //dodać drugi warunek na nr sprawy
-                    index++;
-            if (index > EXISTING_MORE_THEN_ONE_TIME)
-                newListDuplicate.add(elem);
-        }*/
-        double maxi = newList.stream()
-                .map(ArrayCreator::getAmountDue)
-                .reduce(-22221000.0, Double::max);
-        System.out.println("maxi: " + maxi);
+        Set<String> temp = new HashSet<>();
+        Set<String> tempDuplicates = newList.stream()
+                .map(ArrayCreator::getIdCustomer)
+                .filter(p -> !temp.add(p))
+                .collect(Collectors.toSet());
+        temp.clear();
 
-        System.out.println(newListDuplicate.size());
-        return newListDuplicate;
-    }
+        List<ArrayCreator> newListDuplicates = newList.stream()
+                .filter(p -> tempDuplicates.contains(p.getIdCustomer()))
+                .collect(Collectors.toList());
+        tempDuplicates.clear();
 
-    private static <T> Predicate<T> distinctByKey(Function<? super T, Object> keyExtractor) {
-        Map<Object, Boolean> seen = new ConcurrentHashMap<>();
-        return t -> seen.putIfAbsent(keyExtractor.apply(t), Boolean.TRUE) == null;
+        System.out.println("Lista duplicatow: " + newListDuplicates.size());
+        return newListDuplicates;
     }
 }

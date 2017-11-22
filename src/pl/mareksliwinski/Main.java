@@ -24,7 +24,7 @@ public class Main {
         Opertations opertations = new Opertations();
 
         repetOldNew = opertations.newOldTheSameId(newList, oldList);
-        newListDuplicates = opertations.DupNewListId(newList);
+        newListDuplicates = opertations.dupNewListId(newList);
 
     }
 }
