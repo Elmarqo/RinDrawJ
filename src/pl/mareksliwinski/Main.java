@@ -25,6 +25,5 @@ public class Main {
 
         repetOldNew = opertations.newOldTheSameId(newList, oldList);
         newListDuplicates = opertations.dupNewListId(newList);
-
     }
 }
