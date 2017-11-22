@@ -4,26 +4,23 @@ import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class Opertations {
+public class Opertations implements Interface {
 
     public List<ArrayCreator> newOldTheSameId(List<ArrayCreator> newList, List<ArrayCreator> oldList) {
-
-        String pattern = "###,###.##";
-        DecimalFormat dF = new DecimalFormat(pattern);
 
         Set<String> tempIdCustomer = oldList.stream().parallel()
                 .map(ArrayCreator::getIdCustomer)
                 .sorted()
                 .collect(Collectors.toSet());
         System.out.println("\nLiczba unikalnych dluznikow w starej transzy: " +
-                dF.format(tempIdCustomer.size()));
+                format(tempIdCustomer.size()));
 
         List<ArrayCreator> theSame =
                 newList.stream().parallel()
                         .filter(ac -> tempIdCustomer.contains(ac.getIdCustomer()))
                         .collect(Collectors.toList());
         System.out.println("Liczba dluznikow nowej transzy wystepujaca w poprzednich transzach: " +
-                dF.format(theSame.size()));
+                format(theSame.size()));
 
         return theSame;
     }
@@ -42,7 +39,14 @@ public class Opertations {
                 .collect(Collectors.toList());
         tempDuplicates.clear();
 
-        System.out.println("Lista duplicatow: " + newListDuplicates.size());
+        System.out.println("Lista duplicatow: " + format(newListDuplicates.size()));
         return newListDuplicates;
+    }
+
+    @Override
+    public String format(double number) {
+        String pattern = "###,###.##";
+        DecimalFormat decimalFormat = new DecimalFormat(pattern);
+        return decimalFormat.format(number);
     }
 }
