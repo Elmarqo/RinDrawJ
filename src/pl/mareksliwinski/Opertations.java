@@ -39,7 +39,7 @@ public class Opertations implements Interface {
                 .collect(Collectors.toList());
         tempDuplicates.clear();
 
-        System.out.println("Lista duplicatow: " + format(newListDuplicates.size()));
+        System.out.println("Lista duplikatow: " + format(newListDuplicates.size()));
         return newListDuplicates;
     }
 
