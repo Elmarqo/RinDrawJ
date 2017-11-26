@@ -47,8 +47,6 @@ public class Opertations implements Interface {
 
         List<ArrayCreator> finalDrawList = new ArrayList<>();
 
-        System.out.println("Zero: " + repetition.get(0).getIdCustomer());
-
         for (ArrayCreator elem : repetition) {
             for (ArrayCreator elem2 : oldList)
                 if (elem.getIdCustomer().contains(elem2.getIdCustomer())) {
@@ -61,9 +59,7 @@ public class Opertations implements Interface {
                     break;
                 }
         }
-        System.out.println("Rozmiar finalDrawList: " + finalDrawList.size());
-        System.out.println(finalDrawList);
-
+        System.out.println("lICZBA SPRAW DO LOSOWANIA: " + format(finalDrawList.size()));
         return finalDrawList;
     }
 
