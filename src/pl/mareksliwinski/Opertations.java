@@ -45,9 +45,15 @@ public class Opertations implements Interface {
 
     List<ArrayCreator> addNewCasesToFirmAlredyManagedcase(List<ArrayCreator> repetition, List<ArrayCreator> oldList) {
 
-        List<ArrayCreator> finalDrawList = new ArrayList<>();
+        List<String> temp = oldList.stream()
+                .map(ArrayCreator::getIdCustomer)
+                .collect(Collectors.toList());
 
-        for (ArrayCreator elem : repetition) {
+        List<ArrayCreator> finalDrawList = repetition.stream()
+                .filter(p -> temp.contains(p.getIdCustomer()))
+                .collect(Collectors.toList());
+
+      /*  for (ArrayCreator elem : repetition) {
             for (ArrayCreator elem2 : oldList)
                 if (elem.getIdCustomer().contains(elem2.getIdCustomer())) {
                     ArrayCreator temp = new ArrayCreator();
@@ -58,8 +64,8 @@ public class Opertations implements Interface {
                     finalDrawList.add(temp);
                     break;
                 }
-        }
-        System.out.println("lICZBA SPRAW DO LOSOWANIA: " + format(finalDrawList.size()));
+        }*/
+        System.out.println("Liczba wylosowanych spraw: " + format(finalDrawList.size()));
         return finalDrawList;
     }
 
