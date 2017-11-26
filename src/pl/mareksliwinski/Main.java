@@ -20,10 +20,12 @@ public class Main {
         List<ArrayCreator> oldList = olddata.getList();
         List<ArrayCreator> repetOldNew;
         List<ArrayCreator> newListDuplicates;
+        List<ArrayCreator> finalDrawList;
 
         Opertations opertations = new Opertations();
 
         repetOldNew = opertations.newOldTheSameId(newList, oldList);
         newListDuplicates = opertations.dupNewListId(newList);
+        finalDrawList = opertations.addNewCasesToFirmAlredyManagedcase(repetOldNew, oldList);
     }
 }

@@ -15,14 +15,14 @@ public class Opertations implements Interface {
         System.out.println("\nLiczba unikalnych dluznikow w starej transzy: " +
                 format(tempIdCustomer.size()));
 
-        List<ArrayCreator> theSame =
+        List<ArrayCreator> repetition =
                 newList.stream().parallel()
                         .filter(ac -> tempIdCustomer.contains(ac.getIdCustomer()))
                         .collect(Collectors.toList());
         System.out.println("Liczba dluznikow nowej transzy wystepujaca w poprzednich transzach: " +
-                format(theSame.size()));
+                format(repetition.size()));
 
-        return theSame;
+        return repetition;
     }
 
     List<ArrayCreator> dupNewListId(List<ArrayCreator> newList) {
@@ -41,6 +41,30 @@ public class Opertations implements Interface {
 
         System.out.println("Lista duplikatow: " + format(newListDuplicates.size()));
         return newListDuplicates;
+    }
+
+    List<ArrayCreator> addNewCasesToFirmAlredyManagedcase(List<ArrayCreator> repetition, List<ArrayCreator> oldList) {
+
+        List<ArrayCreator> finalDrawList = new ArrayList<>();
+
+        System.out.println("Zero: " + repetition.get(0).getIdCustomer());
+
+        for (ArrayCreator elem : repetition) {
+            for (ArrayCreator elem2 : oldList)
+                if (elem.getIdCustomer().contains(elem2.getIdCustomer())) {
+                    ArrayCreator temp = new ArrayCreator();
+                    temp.setFirmName(elem2.getFirmName());
+                    temp.setCaseNumber(elem.getCaseNumber());
+                    temp.setAmountDue(elem.getAmountDue());
+                    temp.setIdCustomer(elem.getIdCustomer());
+                    finalDrawList.add(temp);
+                    break;
+                }
+        }
+        System.out.println("Rozmiar finalDrawList: " + finalDrawList.size());
+        System.out.println(finalDrawList);
+
+        return finalDrawList;
     }
 
     @Override
