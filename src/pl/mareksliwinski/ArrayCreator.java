@@ -1,6 +1,5 @@
 package pl.mareksliwinski;
 
-
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.*;
@@ -83,14 +82,6 @@ public class ArrayCreator {
         sortByIDCustomer(getList());
         //sortByAmountDue(getList());
         System.out.println("OK.");
-
-        /*for (ArrayCreator elem : getList()) {
-            System.out.print(elem.getFirmName() + "\t");
-            System.out.print(elem.getCaseNumber() + "\t");
-            System.out.print(elem.getAmountDue() + "\t");
-            System.out.println(elem.getIdCustomer());
-        }*/
-        //System.out.println("Wczytano " + decimalFormat.format(getList().size()) + " spraw");
     }
 
     public static final Comparator<ArrayCreator> BY_AMOUNT_DUE

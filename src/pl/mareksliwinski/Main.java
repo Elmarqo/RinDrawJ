@@ -21,11 +21,16 @@ public class Main {
         List<ArrayCreator> repetOldNew;
         List<ArrayCreator> newListDuplicates;
         List<ArrayCreator> finalDrawList;
+        List<ArrayCreator> removeRepetitionDup;
+        List<ArrayCreator> theSame;
 
         Opertations opertations = new Opertations();
 
         repetOldNew = opertations.newOldTheSameId(newList, oldList);
         newListDuplicates = opertations.dupNewListId(newList);
         finalDrawList = opertations.addNewCasesToFirmAlredyManagedcase(repetOldNew, oldList);
+        removeRepetitionDup = opertations.removeRepetitionDup(repetOldNew);
+        theSame = opertations.removeRepDistinctFromNewListDuplicate (removeRepetitionDup, newListDuplicates);
+        finalDrawList = opertations.addRepeatingDebtors(theSame, finalDrawList);
     }
 }
